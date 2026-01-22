@@ -24,13 +24,14 @@ public class SecurityConfig {
     private JwtAuthenticationFilter jwtAuthenticationFilter;
 
     private static final String[] PUBLIC_ENDPOINTS={
-            "/api/auth/login",
-            "/api/auth/signup",
-            "/api/auth/validate-email",
-            "/api/auth/verify-email",
-            "/api/auth/resend-verification",
-            "/api/auth/forgot-password",
-            "/api/auth/reset-password"
+            "/auth/login",
+            "/auth/verify-email",
+            "/auth/signup",
+            "/auth/validate-email",
+            "/auth/verify-email",
+            "/auth/resend-verification",
+            "/auth/forgot-password",
+            "/auth/reset-password"
     };
 
     @Bean
