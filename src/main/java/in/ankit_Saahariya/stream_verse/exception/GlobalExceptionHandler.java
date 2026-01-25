@@ -25,6 +25,12 @@ public class GlobalExceptionHandler {
         return buildResponse(HttpStatus.UNAUTHORIZED,ex.getMessage());
     }
 
+    @ExceptionHandler(EmailAllReadyVerifiedException.class)
+    public ResponseEntity<Map<String,Object>> EmailAllReadyVerified(EmailAllReadyVerifiedException ex){
+        log.warn("EmailAllReadyVerifiedException: {}" ,ex.getMessage(),ex);
+        return buildResponse(HttpStatus.BAD_REQUEST,ex.getMessage());
+    }
+
     @ExceptionHandler(AccountDeactivatedException.class)
     public ResponseEntity<Map<String,Object>> handleAccountDeactivated(AccountDeactivatedException ex){
         log.warn("AccountDeactivatedException: {}", ex.getMessage(),ex);

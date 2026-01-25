@@ -1,7 +1,9 @@
 package in.ankit_Saahariya.stream_verse.serviceImp;
 
 import in.ankit_Saahariya.stream_verse.dao.UserRepository;
+import in.ankit_Saahariya.stream_verse.dto.request.EmailRequest;
 import in.ankit_Saahariya.stream_verse.dto.request.UserRequest;
+import in.ankit_Saahariya.stream_verse.dto.response.EmailValidationResponse;
 import in.ankit_Saahariya.stream_verse.dto.response.LoginResponse;
 import in.ankit_Saahariya.stream_verse.dto.response.MessageResponse;
 import in.ankit_Saahariya.stream_verse.entity.UserEntity;
@@ -15,6 +17,7 @@ import in.ankit_Saahariya.stream_verse.service.AuthService;
 import in.ankit_Saahariya.stream_verse.service.EmailService;
 import in.ankit_Saahariya.stream_verse.util.ServiceUtil;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -46,7 +49,7 @@ public class AuthServiceImp implements AuthService {
         user.setEmailVerified(false);
         String verificationToken = UUID.randomUUID().toString();
         user.setVerificationToken(verificationToken);
-        user.setVerificationTokenExpire(Instant.now().plusSeconds(86400));
+        user.setVerificationTokenExpire(Instant.now().plusSeconds(3));
         userRepository.save(user);
         emailService.sendVerificationEmail(userRequest.getEmail(),verificationToken);
 
@@ -70,5 +73,40 @@ public class AuthServiceImp implements AuthService {
 
         final String token = jwtUtil.generateToken(user.getEmail(),user.getRole().name());
         return new LoginResponse(token,user.getEmail(), user.getFullName(),user.getRole().name());
+    }
+
+    @Override
+    public EmailValidationResponse validateEmail(String email) {
+        boolean exists =  userRepository.existsByEmail(email);
+        return new EmailValidationResponse(exists,!exists);
+    }
+
+    @Override
+    public MessageResponse resendVerification(EmailRequest emailRequest) {
+        UserEntity user = userRepository.findByEmail(emailRequest.getEmail())
+                .orElseThrow(()-> new UsernameNotFoundException("User not Found in database!"));
+
+        if(user.isEmailVerified()){
+            throw new EmailAlreadyExistsException("Email Already Verified ! ");
+        }
+
+        // Token abhi bhi valid hai → resend mat karo
+        if (user.getVerificationTokenExpire() != null &&
+                user.getVerificationTokenExpire().isAfter(Instant.now())) {
+
+            throw new RuntimeException(
+                    "Verification link is already sent and still valid"
+            );
+        }
+
+        String newToken = UUID.randomUUID().toString();
+
+        user.setVerificationToken(newToken);
+        user.setVerificationTokenExpire(Instant.now().plusSeconds(43200));
+
+        userRepository.save(user);
+
+        emailService.sendVerificationEmail(user.getEmail(),newToken);
+        return new MessageResponse("Verification link has been resent to your email");
     }
 }

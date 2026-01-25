@@ -2,8 +2,10 @@ package in.ankit_Saahariya.stream_verse.controller;
 
 
 import in.ankit_Saahariya.stream_verse.dao.UserRepository;
+import in.ankit_Saahariya.stream_verse.dto.request.EmailRequest;
 import in.ankit_Saahariya.stream_verse.dto.request.LoginRequest;
 import in.ankit_Saahariya.stream_verse.dto.request.UserRequest;
+import in.ankit_Saahariya.stream_verse.dto.response.EmailValidationResponse;
 import in.ankit_Saahariya.stream_verse.dto.response.LoginResponse;
 import in.ankit_Saahariya.stream_verse.dto.response.MessageResponse;
 import in.ankit_Saahariya.stream_verse.entity.UserEntity;
@@ -58,4 +60,16 @@ public class AuthController {
         LoginResponse response = authService.login(loginRequest.getEmail(),loginRequest.getPassword());
         return ResponseEntity.ok(response);
     }
+
+    @GetMapping("/validate-email")
+    public ResponseEntity<EmailValidationResponse> validateEmail(@RequestParam String email){
+        return ResponseEntity.ok(authService.validateEmail(email));
+    }
+
+    @PostMapping("resend/verification")
+    public ResponseEntity<MessageResponse> resendVerification(@Valid @RequestBody EmailRequest emailRequest){
+        return ResponseEntity.ok(authService.resendVerification(emailRequest));
+    }
+
+
 }
