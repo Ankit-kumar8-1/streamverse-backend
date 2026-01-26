@@ -6,6 +6,7 @@ import in.ankit_Saahariya.stream_verse.dto.request.EmailRequest;
 import in.ankit_Saahariya.stream_verse.dto.request.LoginRequest;
 import in.ankit_Saahariya.stream_verse.dto.request.UserRequest;
 import in.ankit_Saahariya.stream_verse.dto.response.EmailValidationResponse;
+import in.ankit_Saahariya.stream_verse.dto.response.ForgotPasswordResponse;
 import in.ankit_Saahariya.stream_verse.dto.response.LoginResponse;
 import in.ankit_Saahariya.stream_verse.dto.response.MessageResponse;
 import in.ankit_Saahariya.stream_verse.entity.UserEntity;
@@ -72,4 +73,13 @@ public class AuthController {
     }
 
 
+    @PostMapping("/forgot-password")
+    public ResponseEntity<MessageResponse> forgotPassword(@Valid @RequestBody  EmailRequest emailRequest){
+        return ResponseEntity.ok(authService.forgotPassword(emailRequest.getEmail()));
+    }
+
+    @GetMapping("/reset-password")
+    public ResponseEntity<ForgotPasswordResponse> forgotPasswordAllow(@RequestParam String token){
+        return ResponseEntity.ok(authService.verifyResetToken(token));
+    }
 }

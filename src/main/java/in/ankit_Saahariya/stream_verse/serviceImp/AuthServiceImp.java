@@ -4,14 +4,12 @@ import in.ankit_Saahariya.stream_verse.dao.UserRepository;
 import in.ankit_Saahariya.stream_verse.dto.request.EmailRequest;
 import in.ankit_Saahariya.stream_verse.dto.request.UserRequest;
 import in.ankit_Saahariya.stream_verse.dto.response.EmailValidationResponse;
+import in.ankit_Saahariya.stream_verse.dto.response.ForgotPasswordResponse;
 import in.ankit_Saahariya.stream_verse.dto.response.LoginResponse;
 import in.ankit_Saahariya.stream_verse.dto.response.MessageResponse;
 import in.ankit_Saahariya.stream_verse.entity.UserEntity;
 import in.ankit_Saahariya.stream_verse.enums.Role;
-import in.ankit_Saahariya.stream_verse.exception.AccountDeactivatedException;
-import in.ankit_Saahariya.stream_verse.exception.BadCredentialsException;
-import in.ankit_Saahariya.stream_verse.exception.EmailAlreadyExistsException;
-import in.ankit_Saahariya.stream_verse.exception.EmailNotVerifiedException;
+import in.ankit_Saahariya.stream_verse.exception.*;
 import in.ankit_Saahariya.stream_verse.security.JwtUtil;
 import in.ankit_Saahariya.stream_verse.service.AuthService;
 import in.ankit_Saahariya.stream_verse.service.EmailService;
@@ -109,4 +107,32 @@ public class AuthServiceImp implements AuthService {
         emailService.sendVerificationEmail(user.getEmail(),newToken);
         return new MessageResponse("Verification link has been resent to your email");
     }
+
+    @Override
+    public MessageResponse forgotPassword(String email) {
+        UserEntity user = serviceUtil.getUserByEmailOrThrow(email);
+        String resetToken = UUID.randomUUID().toString();
+
+        user.setPasswordRestToken(resetToken);
+        user.setPasswordRestTokenExpire(Instant.now().plusSeconds(3600));
+
+        userRepository.save(user);
+
+        emailService.sendPasswordResetEmail(email,resetToken);
+        return new MessageResponse("Password reset email sent successfully !  Please check your Email box");
+    }
+
+    @Override
+    public ForgotPasswordResponse verifyResetToken( String token) {
+        UserEntity user = userRepository.findByPasswordRestToken(token)
+                .orElseThrow(()-> new ResourceNotFoundException("Invalid or expired password reset token"));
+
+        if (user.getPasswordRestTokenExpire()==null && Instant.now().isAfter(user.getPasswordRestTokenExpire())){
+            throw new TokenExpiredException("Password reset token has expired. Please request a new one.");
+        }
+
+        return new ForgotPasswordResponse(true,"Password reset token is valid. You can now reset your password.");
+    }
+
+
 }

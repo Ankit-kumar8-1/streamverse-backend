@@ -25,6 +25,12 @@ public class GlobalExceptionHandler {
         return buildResponse(HttpStatus.UNAUTHORIZED,ex.getMessage());
     }
 
+    @ExceptionHandler(TokenExpiredException.class)
+    public ResponseEntity<Map<String,Object>> TokenExpired(TokenExpiredException ex){
+        log.warn("TokenExpiredException: {}" ,ex.getMessage(),ex);
+        return buildResponse(HttpStatus.BAD_REQUEST,ex.getMessage());
+    }
+
     @ExceptionHandler(EmailAllReadyVerifiedException.class)
     public ResponseEntity<Map<String,Object>> EmailAllReadyVerified(EmailAllReadyVerifiedException ex){
         log.warn("EmailAllReadyVerifiedException: {}" ,ex.getMessage(),ex);
