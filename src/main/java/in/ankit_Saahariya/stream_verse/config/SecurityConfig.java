@@ -27,9 +27,9 @@ public class SecurityConfig {
             "/auth/verify-email",
             "/auth/signup",
             "/auth/validate-email",
-            "/auth/verify-email",
             "/auth/resend-verification",
             "/auth/forgot-password",
+            "/auth/forgotPasswordAllow",
             "/auth/reset-password"
     };
 

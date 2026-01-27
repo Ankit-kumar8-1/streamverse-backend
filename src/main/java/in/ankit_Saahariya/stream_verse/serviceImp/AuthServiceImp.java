@@ -115,6 +115,7 @@ public class AuthServiceImp implements AuthService {
 
         user.setPasswordRestToken(resetToken);
         user.setPasswordRestTokenExpire(Instant.now().plusSeconds(3600));
+        user.setPasswordResetVerified(false);
 
         userRepository.save(user);
 
@@ -127,12 +128,54 @@ public class AuthServiceImp implements AuthService {
         UserEntity user = userRepository.findByPasswordRestToken(token)
                 .orElseThrow(()-> new ResourceNotFoundException("Invalid or expired password reset token"));
 
-        if (user.getPasswordRestTokenExpire()==null && Instant.now().isAfter(user.getPasswordRestTokenExpire())){
+        if (user.getPasswordRestTokenExpire()==null || Instant.now().isAfter(user.getPasswordRestTokenExpire())){
             throw new TokenExpiredException("Password reset token has expired. Please request a new one.");
         }
 
+        user.setPasswordResetVerified(true);
+        userRepository.save(user);
         return new ForgotPasswordResponse(true,"Password reset token is valid. You can now reset your password.");
     }
 
+    @Override
+    public MessageResponse resetPassword(String token, String newPassword) {
+        UserEntity user = userRepository.findByPasswordRestToken(token)
+                .orElseThrow(()-> new InvalidTokenException("Invalid or expired password reset token"));
 
+        if (user.getPasswordRestTokenExpire() ==null
+                || user.getPasswordRestTokenExpire().isBefore(Instant.now()) ){
+            throw new InvalidTokenException("Password reset token has expired. Please request a new one.");
+        }
+
+        if (!user.getPasswordResetVerified()) {
+            throw new RuntimeException("Please verify reset link first");
+        }
+        user.setPassword(passwordEncoder.encode(newPassword));
+        user.setPasswordRestTokenExpire(null);
+        user.setPasswordRestToken(null);
+        user.setPasswordResetVerified(false);
+
+        userRepository.save(user);
+
+        return  new MessageResponse("Password reset successfully ! , You can now login with your new Password !");
+    }
+
+    @Override
+    public MessageResponse changePassword(String email, String currentPassword, String newPassword) {
+        UserEntity user=  serviceUtil.getUserByEmailOrThrow(email);
+
+        if(!passwordEncoder.matches(currentPassword,user.getPassword())){
+            throw new InValidCredentialsException("Current password is incorrect");
+        }
+
+        user.setPassword(passwordEncoder.encode(newPassword));
+        userRepository.save(user);
+        return new MessageResponse("Password change successfully !");
+    }
+
+    @Override
+    public LoginResponse currentUser(String email) {
+        UserEntity user = serviceUtil.getUserByEmailOrThrow(email);
+        return new LoginResponse(null,user.getEmail(),user.getFullName(),user.getRole().name());
+    }
 }

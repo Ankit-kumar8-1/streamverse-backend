@@ -51,6 +51,9 @@ public class UserEntity {
     @Column
     private Instant passwordRestTokenExpire;
 
+    @Column(name = "password_reset_verified",nullable = false)
+    private Boolean passwordResetVerified =false;
+
     @CreationTimestamp
     @Column(nullable = false,updatable = false)
     private Instant createdAt;

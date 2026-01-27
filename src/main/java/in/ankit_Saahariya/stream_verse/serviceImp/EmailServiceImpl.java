@@ -71,7 +71,7 @@ public class EmailServiceImpl implements EmailService {
             message.setTo(toEmail);
             message.setSubject("Stream_verse - Password Reset");
             String resetLink = backendUrl
-                    + "/api/v1.1/auth/reset-password?token="
+                    + "/api/v1.1/auth/forgotPasswordAllow?token="
                     + URLEncoder.encode(token, StandardCharsets.UTF_8);
 
             String emailBody=

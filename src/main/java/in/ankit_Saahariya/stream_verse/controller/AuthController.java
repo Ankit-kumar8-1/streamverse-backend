@@ -2,9 +2,7 @@ package in.ankit_Saahariya.stream_verse.controller;
 
 
 import in.ankit_Saahariya.stream_verse.dao.UserRepository;
-import in.ankit_Saahariya.stream_verse.dto.request.EmailRequest;
-import in.ankit_Saahariya.stream_verse.dto.request.LoginRequest;
-import in.ankit_Saahariya.stream_verse.dto.request.UserRequest;
+import in.ankit_Saahariya.stream_verse.dto.request.*;
 import in.ankit_Saahariya.stream_verse.dto.response.EmailValidationResponse;
 import in.ankit_Saahariya.stream_verse.dto.response.ForgotPasswordResponse;
 import in.ankit_Saahariya.stream_verse.dto.response.LoginResponse;
@@ -16,6 +14,7 @@ import jakarta.validation.Valid;
 import jakarta.websocket.server.PathParam;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.Instant;
@@ -78,8 +77,34 @@ public class AuthController {
         return ResponseEntity.ok(authService.forgotPassword(emailRequest.getEmail()));
     }
 
-    @GetMapping("/reset-password")
+    @GetMapping("/forgotPasswordAllow")
     public ResponseEntity<ForgotPasswordResponse> forgotPasswordAllow(@RequestParam String token){
         return ResponseEntity.ok(authService.verifyResetToken(token));
     }
+
+    @PostMapping("reset-password")
+    public ResponseEntity<MessageResponse> resetPassword(
+            @Valid @RequestBody ResetPasswordRequest resetPasswordRequest
+            ){
+        return ResponseEntity.ok(authService.
+                resetPassword(resetPasswordRequest.getToken(),resetPasswordRequest.getNewPassword()));
+    }
+
+    @PostMapping("change-password")
+    public ResponseEntity<?> changePassword(Authentication authentication , @Valid @RequestBody
+    ChangePasswordRequest changePasswordRequest){
+        String email = authentication.getName();
+        return ResponseEntity.ok(authService.changePassword(
+                email,changePasswordRequest.getCurrentPassword(),
+                changePasswordRequest.getNewPassword()
+        ));
+
+    }
+    @GetMapping("/current-user")
+    public ResponseEntity<LoginResponse> currentUser(Authentication authentication){
+        String email = authentication.getName();
+        return ResponseEntity.ok(authService.currentUser(email));
+    }
+
+
 }
