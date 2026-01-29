@@ -3,19 +3,25 @@ package in.ankit_Saahariya.stream_verse.serviceImp;
 import in.ankit_Saahariya.stream_verse.dao.UserRepository;
 import in.ankit_Saahariya.stream_verse.dto.request.UserRequest;
 import in.ankit_Saahariya.stream_verse.dto.response.MessageResponse;
+import in.ankit_Saahariya.stream_verse.dto.response.PageResponse;
+import in.ankit_Saahariya.stream_verse.dto.response.UserResponse;
 import in.ankit_Saahariya.stream_verse.entity.UserEntity;
 import in.ankit_Saahariya.stream_verse.enums.Role;
 import in.ankit_Saahariya.stream_verse.exception.EmailAlreadyExistsException;
 import in.ankit_Saahariya.stream_verse.exception.InvalidRoleException;
 import in.ankit_Saahariya.stream_verse.service.EmailService;
 import in.ankit_Saahariya.stream_verse.service.UserService;
+import in.ankit_Saahariya.stream_verse.util.PaginationUtils;
 import in.ankit_Saahariya.stream_verse.util.ServiceUtil;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.util.Arrays;
+import java.util.Locale;
 import java.util.UUID;
 
 
@@ -64,7 +70,43 @@ public class UserServiceImp implements UserService {
         return new MessageResponse("User updated successfully !");
     }
 
+    @Override
+    public PageResponse<UserResponse> getUsers(int page, int size, String search) {
+        Pageable pageable = PaginationUtils.createPageRequest(page,size,"id");
+        Page<UserEntity> userPage ;
 
+        if(search != null && !search.trim().isEmpty()){
+            userPage = userRepository.searchUsers(search.trim(),pageable);
+        }else {
+            userPage = userRepository.findAll(pageable);
+        }
+
+        return PaginationUtils.toPageResponse(userPage,UserResponse::fromEntity);
+
+    }
+
+    @Override
+    public MessageResponse deleteUser(Long id, String currentUserEmail) {
+        UserEntity existingUser = serviceUtil.getUserByIdOrThrow(id);
+
+        if(existingUser.getEmail().equals(currentUserEmail)){
+            throw  new RuntimeException("You can not delete your own account ");
+        }
+
+        ensureNotLastAdmin(existingUser,"delete");
+
+        userRepository.deleteById(id);
+        return new MessageResponse("User deleted successfully !");
+    }
+
+    private void ensureNotLastAdmin(UserEntity existingUser, String operation) {
+        if(existingUser.getRole() == Role.ADMIN){
+            long adminCount = userRepository.countByRole(Role.ADMIN);
+            if(adminCount<= 1){
+                throw  new RuntimeException("Cannot"+ operation + "the last admin user");
+            }
+        }
+    }
 
     private void ensureNotLastActiveAdmin(UserEntity user) {
         if(user.isActive() && user.getRole()==Role.ADMIN ) {
