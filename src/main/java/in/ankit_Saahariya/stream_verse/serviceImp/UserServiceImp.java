@@ -99,6 +99,35 @@ public class UserServiceImp implements UserService {
         return new MessageResponse("User deleted successfully !");
     }
 
+    @Override
+    public MessageResponse toggleUserStatus(Long id, String currentUserEmail) {
+        UserEntity user = serviceUtil.getUserByIdOrThrow(id);
+
+        if(user.getEmail().equals(currentUserEmail)){
+            throw new RuntimeException("You cannot deactivate your own account");
+        }
+
+        ensureNotLastActiveAdmin(user);
+        user.setActive(!user.isActive());
+        userRepository.save(user);
+        return new MessageResponse("User status updated successfully !");
+    }
+
+    @Override
+    public MessageResponse changeUserRole(Long id, UserRequest userRequest) {
+        UserEntity user = serviceUtil.getUserByIdOrThrow(id);
+        validateRole(userRequest.getRole());
+
+        Role newRole = Role.valueOf(userRequest.getRole().toUpperCase());
+        if(user.getRole() == Role.ADMIN && newRole == Role.USER){
+            ensureNotLastAdmin(user,"change the role of");
+        }
+
+        user.setRole(newRole);
+        userRepository.save(user);
+        return new MessageResponse("user role updated successfully");
+    }
+
     private void ensureNotLastAdmin(UserEntity existingUser, String operation) {
         if(existingUser.getRole() == Role.ADMIN){
             long adminCount = userRepository.countByRole(Role.ADMIN);
@@ -122,4 +151,5 @@ public class UserServiceImp implements UserService {
             throw new InvalidRoleException("Invalid role :"+role);
         }
     }
+
 }
