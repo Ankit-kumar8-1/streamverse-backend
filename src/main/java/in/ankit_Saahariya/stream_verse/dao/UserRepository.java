@@ -1,6 +1,7 @@
 package in.ankit_Saahariya.stream_verse.dao;
 
 import in.ankit_Saahariya.stream_verse.entity.UserEntity;
+import in.ankit_Saahariya.stream_verse.enums.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
@@ -12,4 +13,7 @@ public interface UserRepository extends JpaRepository<UserEntity,Long> {
     boolean existsByEmail(String email);
 
     Optional<UserEntity> findByPasswordRestToken(String token);
+
+
+    long countByRoleAndIsActive(Role role, boolean isActive);
 }
