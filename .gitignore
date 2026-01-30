@@ -34,6 +34,12 @@ build/
 /nbdist/
 /.nb-gradle/
 
+
+### User Uploaded Media (DO NOT COMMIT) ###
+uploads/
+uploads/**
+
+
 ### Logs ###
 logs/
 *.log
