@@ -23,4 +23,6 @@ public class VideoRequest {
     private String src;
     private boolean published;
     private List<String> categories;
+
+    private String posterUuid;
 }

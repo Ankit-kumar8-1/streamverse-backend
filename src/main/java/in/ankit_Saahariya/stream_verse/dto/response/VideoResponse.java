@@ -31,7 +31,7 @@ public class VideoResponse {
     private Instant updatedAt;
     private boolean isInWatchList;
 
-    public static VideoResponse forEntity(VideoEntity video) {
+    public static VideoResponse fromEntity(VideoEntity video) {
         return VideoResponse.builder()
                 .id(video.getId())
                 .title(video.getTitle())
@@ -49,4 +49,6 @@ public class VideoResponse {
                         video.getIsInWatchList() != null ? video.getIsInWatchList() : false) // default
                 .build();
     }
+
+
 }
