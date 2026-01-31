@@ -4,11 +4,9 @@ package in.ankit_Saahariya.stream_verse.controller;
 import in.ankit_Saahariya.stream_verse.service.FileUploadService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.HashMap;
@@ -41,4 +39,17 @@ public class FileUploadController {
         return ResponseEntity.ok(buildUploadResponse(uuid,file));
     }
 
+
+    @GetMapping("/video/{uuid}")
+    public ResponseEntity<Resource> serveVideo(
+            @PathVariable String uuid,
+            @RequestHeader(value = "Range", required = false) String range
+    ) {
+        return fileUploadService.serveVideo(uuid, range);
+    }
+
+    @GetMapping("/image/{uuid}")
+    public ResponseEntity<Resource> serveImage(@PathVariable String uuid){
+        return fileUploadService.serveImage(uuid);
+    }
 }

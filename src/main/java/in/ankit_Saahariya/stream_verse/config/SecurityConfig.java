@@ -31,6 +31,7 @@ public class SecurityConfig {
             "/auth/forgot-password",
             "/auth/forgotPasswordAllow",
             "/auth/reset-password"
+//            "/files/video/**"
     };
 
     @Bean

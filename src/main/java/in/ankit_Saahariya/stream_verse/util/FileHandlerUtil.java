@@ -33,7 +33,7 @@ public class FileHandlerUtil {
                 .orElseThrow(()-> new RuntimeException("File not found for Uuid:"+ uuid));
     }
 
-    public static String videoContentType(String filename){
+    public static String detectVideoContentType(String filename){
         if(filename == null )return "video/mp4";
 
 
@@ -63,7 +63,7 @@ public class FileHandlerUtil {
     }
 
     public  static long[] parseRangeHeader(String rangeHeader,long fileLength){
-        String [] ranges =  rangeHeader.replace("bytes","").split("-");
+        String [] ranges =  rangeHeader.replace("bytes=","").split("-");
         long rangeStart = Long.parseLong(ranges[0]);
         long rangeEnd = ranges.length>1 && !ranges[1].isEmpty() ?
                 Long.parseLong(ranges[1]): fileLength-1;
@@ -101,7 +101,7 @@ public class FileHandlerUtil {
                 int bytesActualRead = fileReader.read(buffer,offset,bytesToRead);
 
                 if(bytesActualRead> 0){
-                    totalBytesRead=bytesActualRead;
+                    totalBytesRead +=bytesActualRead;
                 }
 
                 if(totalBytesRead >= rangeLength){
