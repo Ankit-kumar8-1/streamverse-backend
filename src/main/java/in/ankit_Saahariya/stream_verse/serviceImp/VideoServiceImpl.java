@@ -61,4 +61,32 @@ public class VideoServiceImpl implements VideoService {
 
         return PaginationUtils.toPageResponse(videoPage,VideoResponse::fromEntity);
     }
+
+    @Override
+    public MessageResponse updateVideoByAdmin(Long id, VideoRequest videoRequest) {
+        VideoEntity newVideo = new VideoEntity();
+        newVideo.setId(id);
+        newVideo.setTitle(videoRequest.getTitle());
+        newVideo.setDescription(videoRequest.getDescription());
+        newVideo.setRating(videoRequest.getRating());
+        newVideo.setSrcUuid(videoRequest.getSrc());
+        newVideo.setPublished(videoRequest.isPublished());
+        newVideo.setPosterUuid(videoRequest.getPosterUuid());
+        newVideo.setCategories(videoRequest.getCategories() !=null ? videoRequest.getCategories() :List.of());
+        newVideo.setDuration(videoRequest.getDuration());
+        newVideo.setYear(videoRequest.getYear());
+
+        videoRepository.save(newVideo);
+
+        return new MessageResponse("Video updated successfully !");
+    }
+
+    @Override
+    public MessageResponse deleteVideo(Long id) {
+        if(!videoRepository.existsById(id)){
+            throw new IllegalArgumentException("Video not found !");
+        }
+        videoRepository.deleteById(id);
+        return new MessageResponse("Video deleted successfully !");
+    }
 }

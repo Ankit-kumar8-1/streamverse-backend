@@ -8,10 +8,12 @@ import in.ankit_Saahariya.stream_verse.dto.response.PageResponse;
 import in.ankit_Saahariya.stream_verse.dto.response.VideoResponse;
 import in.ankit_Saahariya.stream_verse.service.VideoService;
 import jakarta.validation.Valid;
+import jakarta.websocket.server.PathParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityReturnValueHandler;
 
 @RestController
 @RequestMapping("/videos")
@@ -39,4 +41,16 @@ public class VideoController {
         return ResponseEntity.ok(videoService.getAllAdminVideos(page,size,search));
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
+    @PutMapping("/admin/{id}")
+    public ResponseEntity<MessageResponse> updateVideoByAdmin(
+            @PathVariable Long id,@Valid @RequestBody VideoRequest videoRequest){
+        return ResponseEntity.ok(videoService.updateVideoByAdmin(id,videoRequest));
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @DeleteMapping("/admin/{id}")
+    public ResponseEntity<MessageResponse> deleteVideoByAdmin(@PathVariable Long id){
+        return ResponseEntity.ok(videoService.deleteVideo(id));
+    }
 }
