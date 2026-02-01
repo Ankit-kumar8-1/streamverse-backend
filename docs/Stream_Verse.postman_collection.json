@@ -1,0 +1,1048 @@
+{
+  "info": {
+    "_postman_id": "2f1449a3-4286-41c0-834a-84b88bd587c5",
+    "name": "Stream_Verse",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "48665253",
+    "_collection_link": "https://go.postman.co/collection/48665253-2f1449a3-4286-41c0-834a-84b88bd587c5?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Signup",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\":\"amit@mailinator.com\",\r\n    \"password\":\"123456\",\r\n    \"fullName\":\"amit\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{stream_verse}}/auth/signup",
+              "host": [
+                "{{stream_verse}}"
+              ],
+              "path": [
+                "auth",
+                "signup"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "resend- verification -Link(Signup)",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\" :\"amit@mailinator.com\" \r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{stream_verse}}/auth/resend/verification",
+              "host": [
+                "{{stream_verse}}"
+              ],
+              "path": [
+                "auth",
+                "resend",
+                "verification"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Login User",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\":\"rohit@mailinator.com\",\r\n    \"password\":\"987654\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{stream_verse}}/auth/login",
+              "host": [
+                "{{stream_verse}}"
+              ],
+              "path": [
+                "auth",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Validate Email",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "",
+                "value": "",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{stream_verse}}/auth/validate-email?email=rohit@mailinator.com",
+              "host": [
+                "{{stream_verse}}"
+              ],
+              "path": [
+                "auth",
+                "validate-email"
+              ],
+              "query": [
+                {
+                  "key": "email",
+                  "value": "rohit@mailinator.com"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Forgot Password",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\" :\"rohit@mailinator.com\" \r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{stream_verse}}/auth/forgot-password",
+              "host": [
+                "{{stream_verse}}"
+              ],
+              "path": [
+                "auth",
+                "forgot-password"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "reset password (with token ,newPassword)",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"token\":\"8ce4418f-56b5-4206-9f83-9aabe35b16d8\",\r\n    \"newPassword\":\"123456\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{stream_verse}}/auth/reset-password",
+              "host": [
+                "{{stream_verse}}"
+              ],
+              "path": [
+                "auth",
+                "reset-password"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Change-Password",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzUxMiJ9.eyJyb2xlIjoiVVNFUiIsInN1YiI6InJvaGl0QG1haWxpbmF0b3IuY29tIiwiaWF0IjoxNzY5NDk0MzM5LCJleHAiOjE3NzIwODYzMzl9.R-YN8DQft-T1gpX9t4kZfuzxRzf1rPjtQPh1AdVip_28CXqeNN3oEf5gqh4ZlImbnExLBSOZYNTnpm2S4qUetQ",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"currentPassword\" :\"123456\",\r\n    \"newPassword\":\"987654\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{stream_verse}}/auth/change-password",
+              "host": [
+                "{{stream_verse}}"
+              ],
+              "path": [
+                "auth",
+                "change-password"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get current User",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzUxMiJ9.eyJyb2xlIjoiVVNFUiIsInN1YiI6InJvaGl0QG1haWxpbmF0b3IuY29tIiwiaWF0IjoxNzY5NDk2MDQxLCJleHAiOjE3NzIwODgwNDF9.72mPbWq0RT1cBbSLu3Q_QRLYt3rrkGwm4wj442nxDXdrz7pogBVcCL6CIgH3XiSzsyE66pN9_NeysWWgRCXKDQ",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{stream_verse}}/auth/current-user",
+              "host": [
+                "{{stream_verse}}"
+              ],
+              "path": [
+                "auth",
+                "current-user"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Create/update/view/delete(by Admin)",
+      "item": [
+        {
+          "name": "Create user",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzUxMiJ9.eyJyb2xlIjoiQURNSU4iLCJzdWIiOiJyb2hpdEBtYWlsaW5hdG9yLmNvbSIsImlhdCI6MTc2OTY1NTIzMCwiZXhwIjoxNzcyMjQ3MjMwfQ.RXqIx1cMu0se2SQyyqiPgI-ss9rbirSzA8vS3WRPmXgw-v4YB0OuXL8QxLmUA3xB0kFwiwTXfJwJeGRtCrBBQw",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\": \"ankit1234@mailinator.com\",\r\n    \"password\":\"123456\",\r\n    \"fullName\":\"Ankit Saahariya\",\r\n    \"role\":\"USER\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{stream_verse}}/users",
+              "host": [
+                "{{stream_verse}}"
+              ],
+              "path": [
+                "users"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update User",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzUxMiJ9.eyJyb2xlIjoiQURNSU4iLCJzdWIiOiJyb2hpdEBtYWlsaW5hdG9yLmNvbSIsImlhdCI6MTc2OTY1NTIzMCwiZXhwIjoxNzcyMjQ3MjMwfQ.RXqIx1cMu0se2SQyyqiPgI-ss9rbirSzA8vS3WRPmXgw-v4YB0OuXL8QxLmUA3xB0kFwiwTXfJwJeGRtCrBBQw",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"fullName\":\"updateAnkit\",\r\n    \"role\":\"ADMIN\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{stream_verse}}/users/22",
+              "host": [
+                "{{stream_verse}}"
+              ],
+              "path": [
+                "users",
+                "22"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "View All Users",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzUxMiJ9.eyJyb2xlIjoiQURNSU4iLCJzdWIiOiJyb2hpdEBtYWlsaW5hdG9yLmNvbSIsImlhdCI6MTc2OTY1NTIzMCwiZXhwIjoxNzcyMjQ3MjMwfQ.RXqIx1cMu0se2SQyyqiPgI-ss9rbirSzA8vS3WRPmXgw-v4YB0OuXL8QxLmUA3xB0kFwiwTXfJwJeGRtCrBBQw",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\": \"ankit1234@mailinator.com\",\r\n    \"password\":\"123456\",\r\n    \"fullName\":\"Ankit Saahariya\",\r\n    \"role\":\"USER\"\r\n}"
+            },
+            "url": {
+              "raw": "{{stream_verse}}/users?page=0&size=10&search=ankit",
+              "host": [
+                "{{stream_verse}}"
+              ],
+              "path": [
+                "users"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "0"
+                },
+                {
+                  "key": "size",
+                  "value": "10"
+                },
+                {
+                  "key": "search",
+                  "value": "ankit"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete User",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzUxMiJ9.eyJyb2xlIjoiQURNSU4iLCJzdWIiOiJyb2hpdEBtYWlsaW5hdG9yLmNvbSIsImlhdCI6MTc2OTY1NTIzMCwiZXhwIjoxNzcyMjQ3MjMwfQ.RXqIx1cMu0se2SQyyqiPgI-ss9rbirSzA8vS3WRPmXgw-v4YB0OuXL8QxLmUA3xB0kFwiwTXfJwJeGRtCrBBQw",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{stream_verse}}/users/22",
+              "host": [
+                "{{stream_verse}}"
+              ],
+              "path": [
+                "users",
+                "22"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Toggle  User Status",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzUxMiJ9.eyJyb2xlIjoiQURNSU4iLCJzdWIiOiJyb2hpdEBtYWlsaW5hdG9yLmNvbSIsImlhdCI6MTc2OTY4MTA3NywiZXhwIjoxNzcyMjczMDc3fQ.-3K_HdEeGF74DAEzurgO0KI8Rsc_DkOnA6prrQFuETFKoLZn1mvFGur2BRrwpi8ROxKAfXFXQASgxBQG4cG62Q",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\":\"amit@mailinator.com\",\r\n    \"password\":\"123456\"\r\n}"
+            },
+            "url": {
+              "raw": "{{stream_verse}}/users/23/toggle-status",
+              "host": [
+                "{{stream_verse}}"
+              ],
+              "path": [
+                "users",
+                "23",
+                "toggle-status"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Change User Role",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzUxMiJ9.eyJyb2xlIjoiQURNSU4iLCJzdWIiOiJyb2hpdEBtYWlsaW5hdG9yLmNvbSIsImlhdCI6MTc2OTY4MTA3NywiZXhwIjoxNzcyMjczMDc3fQ.-3K_HdEeGF74DAEzurgO0KI8Rsc_DkOnA6prrQFuETFKoLZn1mvFGur2BRrwpi8ROxKAfXFXQASgxBQG4cG62Q",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"role\":\"USER\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{stream_verse}}/users/23/change-role",
+              "host": [
+                "{{stream_verse}}"
+              ],
+              "path": [
+                "users",
+                "23",
+                "change-role"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "File",
+      "item": [
+        {
+          "name": "Video Upload",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzUxMiJ9.eyJyb2xlIjoiQURNSU4iLCJzdWIiOiJyb2hpdEBtYWlsaW5hdG9yLmNvbSIsImlhdCI6MTc2OTgyNTA5NywiZXhwIjoxNzcyNDE3MDk3fQ.1VOphTS3bX6lOJWuLFmK6Fmlo0_AqBAtfbrA2COqotd8l6zIY1YrSk1mS6yOV-K9MiUkRT7kAAxQiJwMlTNOfg",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "file",
+                  "type": "file",
+                  "uuid": "cc3ad3a5-4eb5-41fd-bdc0-5eeee0981e9a",
+                  "src": "/C:/Users/Ankit/Videos/4058078-uhd_4096_2160_25fps.mp4"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{stream_verse}}/files/upload/video",
+              "host": [
+                "{{stream_verse}}"
+              ],
+              "path": [
+                "files",
+                "upload",
+                "video"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Image upload",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzUxMiJ9.eyJyb2xlIjoiQURNSU4iLCJzdWIiOiJyb2hpdEBtYWlsaW5hdG9yLmNvbSIsImlhdCI6MTc2OTgzNjkyNCwiZXhwIjoxNzcyNDI4OTI0fQ.Q38hOHBYyS-TgfK66D4rUwnMfuK7UT_OelMJuKbJoDlqirxq5uWhtZwvWhJkKFGqf758qNqMjrIMpCit_Ehgow",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "file",
+                  "type": "file",
+                  "uuid": "cc3ad3a5-4eb5-41fd-bdc0-5eeee0981e9a",
+                  "src": "/C:/Users/Ankit/Videos/office.jpg"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{stream_verse}}/files/upload/image",
+              "host": [
+                "{{stream_verse}}"
+              ],
+              "path": [
+                "files",
+                "upload",
+                "image"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Serve video",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Range",
+                "value": "0-1",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{stream_verse}}/files/video/5da3af71-f752-4504-b5df-107774b62252",
+              "host": [
+                "{{stream_verse}}"
+              ],
+              "path": [
+                "files",
+                "video",
+                "5da3af71-f752-4504-b5df-107774b62252"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Serve Image",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzUxMiJ9.eyJyb2xlIjoiQURNSU4iLCJzdWIiOiJyb2hpdEBtYWlsaW5hdG9yLmNvbSIsImlhdCI6MTc2OTgzNjkyNCwiZXhwIjoxNzcyNDI4OTI0fQ.Q38hOHBYyS-TgfK66D4rUwnMfuK7UT_OelMJuKbJoDlqirxq5uWhtZwvWhJkKFGqf758qNqMjrIMpCit_Ehgow",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "file",
+                  "type": "file",
+                  "uuid": "cc3ad3a5-4eb5-41fd-bdc0-5eeee0981e9a",
+                  "src": "/C:/Users/Ankit/Videos/office.jpg"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{stream_verse}}/files/imgae/49b69bf6-7fa7-46bb-9221-3df0abafab77",
+              "host": [
+                "{{stream_verse}}"
+              ],
+              "path": [
+                "files",
+                "imgae",
+                "49b69bf6-7fa7-46bb-9221-3df0abafab77"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Videos",
+      "item": [
+        {
+          "name": "create video",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzUxMiJ9.eyJyb2xlIjoiQURNSU4iLCJzdWIiOiJyb2hpdEBtYWlsaW5hdG9yLmNvbSIsImlhdCI6MTc2OTg1OTQ1OCwiZXhwIjoxNzcyNDUxNDU4fQ._J5-6yNOT2beG_1bYUmqjevvrrkDJcQQyql_OHFNiyo_t3ivV5n9a2Wuz98YnkhPFndDdF3Czgb_Dtj97c-A7w",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Range",
+                "value": "0-1",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"title\":\" Monkey King \",\r\n    \"description\":\" the real God son\",\r\n    \"src\":\"video-uuid-here\",\r\n    \"posterUuid\":\"poster-uuid-here\",\r\n    \"year\":2021,\r\n    \"rating\":\"PG-20\",\r\n    \"duration\":119,\r\n    \"categories\":[\"Action\",\"Alian\",\"Thrilled\"],\r\n    \"published\":false\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{stream_verse}}/videos/admin",
+              "host": [
+                "{{stream_verse}}"
+              ],
+              "path": [
+                "videos",
+                "admin"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Fetch all  Video",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzUxMiJ9.eyJyb2xlIjoiQURNSU4iLCJzdWIiOiJyb2hpdEBtYWlsaW5hdG9yLmNvbSIsImlhdCI6MTc2OTg1OTQ1OCwiZXhwIjoxNzcyNDUxNDU4fQ._J5-6yNOT2beG_1bYUmqjevvrrkDJcQQyql_OHFNiyo_t3ivV5n9a2Wuz98YnkhPFndDdF3Czgb_Dtj97c-A7w",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{stream_verse}}/videos/admin",
+              "host": [
+                "{{stream_verse}}"
+              ],
+              "path": [
+                "videos",
+                "admin"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Video Update",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzUxMiJ9.eyJyb2xlIjoiQURNSU4iLCJzdWIiOiJyb2hpdEBtYWlsaW5hdG9yLmNvbSIsImlhdCI6MTc2OTkxMjQxNywiZXhwIjoxNzcyNTA0NDE3fQ.oOvcZajJWYYTEBPAbL5LfsFwI8TsMOK3H1g7wlPy2HfAvpn4E9Jii0Y7CWi2PazpPQLdd4SIuTLkQN1vdrkiLQ",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"title\":\"Update sample video Title\",\r\n    \"description\":\"Update only for testing\",\r\n    \"src\":\"video-uuid-here\",\r\n    \"posterUuid\":\"poster-uuid-here\",\r\n    \"year\":2024,\r\n    \"rating\":\"PG-13\",\r\n    \"duration\":9000,\r\n    \"categories\":[\"Action\",\"Thrilled\"],\r\n    \"published\":false\r\n}\r\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{stream_verse}}/videos/admin/3",
+              "host": [
+                "{{stream_verse}}"
+              ],
+              "path": [
+                "videos",
+                "admin",
+                "3"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "delete Video",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzUxMiJ9.eyJyb2xlIjoiQURNSU4iLCJzdWIiOiJyb2hpdEBtYWlsaW5hdG9yLmNvbSIsImlhdCI6MTc2OTkxMjQxNywiZXhwIjoxNzcyNTA0NDE3fQ.oOvcZajJWYYTEBPAbL5LfsFwI8TsMOK3H1g7wlPy2HfAvpn4E9Jii0Y7CWi2PazpPQLdd4SIuTLkQN1vdrkiLQ",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{stream_verse}}/videos/admin/3",
+              "host": [
+                "{{stream_verse}}"
+              ],
+              "path": [
+                "videos",
+                "admin",
+                "3"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "toggle video",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzUxMiJ9.eyJyb2xlIjoiQURNSU4iLCJzdWIiOiJyb2hpdEBtYWlsaW5hdG9yLmNvbSIsImlhdCI6MTc2OTkxMjQxNywiZXhwIjoxNzcyNTA0NDE3fQ.oOvcZajJWYYTEBPAbL5LfsFwI8TsMOK3H1g7wlPy2HfAvpn4E9Jii0Y7CWi2PazpPQLdd4SIuTLkQN1vdrkiLQ",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"title\":\"Update sample video Title\",\r\n    \"description\":\"Update only for testing\",\r\n    \"src\":\"video-uuid-here\",\r\n    \"posterUuid\":\"poster-uuid-here\",\r\n    \"year\":2024,\r\n    \"rating\":\"PG-13\",\r\n    \"duration\":9000,\r\n    \"categories\":[\"Action\",\"Thrilled\"],\r\n    \"published\":false\r\n}\r\n"
+            },
+            "url": {
+              "raw": "{{stream_verse}}/videos/admin/7/publish?value=true",
+              "host": [
+                "{{stream_verse}}"
+              ],
+              "path": [
+                "videos",
+                "admin",
+                "7",
+                "publish"
+              ],
+              "query": [
+                {
+                  "key": "value",
+                  "value": "true"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Video stats",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzUxMiJ9.eyJyb2xlIjoiQURNSU4iLCJzdWIiOiJyb2hpdEBtYWlsaW5hdG9yLmNvbSIsImlhdCI6MTc2OTg1OTQ1OCwiZXhwIjoxNzcyNDUxNDU4fQ._J5-6yNOT2beG_1bYUmqjevvrrkDJcQQyql_OHFNiyo_t3ivV5n9a2Wuz98YnkhPFndDdF3Czgb_Dtj97c-A7w",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{stream_verse}}/videos/admin/stats",
+              "host": [
+                "{{stream_verse}}"
+              ],
+              "path": [
+                "videos",
+                "admin",
+                "stats"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get Published Videos",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzUxMiJ9.eyJyb2xlIjoiQURNSU4iLCJzdWIiOiJyb2hpdEBtYWlsaW5hdG9yLmNvbSIsImlhdCI6MTc2OTg1OTQ1OCwiZXhwIjoxNzcyNDUxNDU4fQ._J5-6yNOT2beG_1bYUmqjevvrrkDJcQQyql_OHFNiyo_t3ivV5n9a2Wuz98YnkhPFndDdF3Czgb_Dtj97c-A7w",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{stream_verse}}/videos/published?page=0&size=10&search",
+              "host": [
+                "{{stream_verse}}"
+              ],
+              "path": [
+                "videos",
+                "published"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "0",
+                  "type": "text"
+                },
+                {
+                  "key": "size",
+                  "value": "10",
+                  "type": "text"
+                },
+                {
+                  "key": "search",
+                  "value": null,
+                  "type": "text"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Features",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{stream_verse}}/videos/featured",
+              "host": [
+                "{{stream_verse}}"
+              ],
+              "path": [
+                "videos",
+                "featured"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Watch List",
+      "item": [
+        {
+          "name": "add video in WatchList",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzUxMiJ9.eyJyb2xlIjoiQURNSU4iLCJzdWIiOiJyb2hpdEBtYWlsaW5hdG9yLmNvbSIsImlhdCI6MTc2OTkzNjcyOCwiZXhwIjoxNzcyNTI4NzI4fQ.HifiQH4P2XdCDBYzFlT9Hjclyt_gjGuyJARDIQHPUGMsKTYZgaJ9WekxSs11ZjxtCaXg_5Si_NJ4TgncdFm9hw",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{stream_verse}}/watchList/5",
+              "host": [
+                "{{stream_verse}}"
+              ],
+              "path": [
+                "watchList",
+                "5"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Remove video from watchlist",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzUxMiJ9.eyJyb2xlIjoiQURNSU4iLCJzdWIiOiJyb2hpdEBtYWlsaW5hdG9yLmNvbSIsImlhdCI6MTc2OTkzNjcyOCwiZXhwIjoxNzcyNTI4NzI4fQ.HifiQH4P2XdCDBYzFlT9Hjclyt_gjGuyJARDIQHPUGMsKTYZgaJ9WekxSs11ZjxtCaXg_5Si_NJ4TgncdFm9hw",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{stream_verse}}/watchList/4",
+              "host": [
+                "{{stream_verse}}"
+              ],
+              "path": [
+                "watchList",
+                "4"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Watch List",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzUxMiJ9.eyJyb2xlIjoiQURNSU4iLCJzdWIiOiJyb2hpdEBtYWlsaW5hdG9yLmNvbSIsImlhdCI6MTc2OTkzNjcyOCwiZXhwIjoxNzcyNTI4NzI4fQ.HifiQH4P2XdCDBYzFlT9Hjclyt_gjGuyJARDIQHPUGMsKTYZgaJ9WekxSs11ZjxtCaXg_5Si_NJ4TgncdFm9hw",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{stream_verse}}/watchList?page=0&size=10&search=kong",
+              "host": [
+                "{{stream_verse}}"
+              ],
+              "path": [
+                "watchList"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "0"
+                },
+                {
+                  "key": "size",
+                  "value": "10"
+                },
+                {
+                  "key": "search",
+                  "value": "kong"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "eyJhbGciOiJIUzUxMiJ9.eyJyb2xlIjoiVVNFUiIsInN1YiI6ImFua2l0ay5zb2Z0d2FyZUBnbWFpbC5jb20iLCJpYXQiOjE3NjkzNDIzMjIsImV4cCI6MTc3MTkzNDMyMn0.GYrIowLavEu9uesbZYG45svcMTlRvqd1mS4fEsJ_izTB4SH1hMV87dfFA-cd9fODrO0Yx2pqpzX093Ik6XtlYA",
+        "type": "string"
+      }
+    ]
+  },
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "stream_verse",
+      "value": ""
+    }
+  ]
+}
