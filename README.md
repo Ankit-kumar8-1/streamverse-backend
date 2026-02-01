@@ -57,48 +57,178 @@ It provides secure authentication, video & image handling, admin management, and
 ## 📂 Project Structure
 
 
+
 ```text
+
 src/main/java
+
 └── in.ankit_saahariya.stream_verse
+
     ├── StreamVerseApplication.java
+
+
+
     ├── config
+
     │   ├── CorsConfig.java
+
     │   └── SecurityConfig.java
+
+
+
     ├── controller
+
     │   ├── AuthController.java
+
     │   ├── FileUploadController.java
+
     │   ├── UserController.java
+
     │   ├── VideoController.java
+
     │   └── WatchListController.java
+
+
+
     ├── dao
+
     │   ├── UserRepository.java
+
     │   └── VideoRepository.java
+
+
+
     ├── dto
+
     │   ├── request
+
+    │   │   ├── ChangePasswordRequest.java
+
+    │   │   ├── EmailRequest.java
+
     │   │   ├── LoginRequest.java
+
+    │   │   ├── ResetPasswordRequest.java
+
     │   │   ├── UserRequest.java
+
     │   │   └── VideoRequest.java
+
     │   └── response
+
+    │       ├── EmailValidationResponse.java
+
+    │       ├── ForgotPasswordResponse.java
+
     │       ├── LoginResponse.java
+
+    │       ├── MessageResponse.java
+
+    │       ├── PageResponse.java
+
     │       ├── UserResponse.java
-    │       └── VideoResponse.java
+
+    │       ├── VideoResponse.java
+
+    │       └── VideoStatsResponse.java
+
+
+
     ├── entity
+
     │   ├── UserEntity.java
+
     │   └── VideoEntity.java
+
+
+
+    ├── enums
+
+    │   └── Role.java
+
+
+
     ├── exception
+
+    │   ├── AccountDeactivatedException.java
+
+    │   ├── BadCredentialsException.java
+
+    │   ├── EmailAlreadyExistsException.java
+
+    │   ├── EmailAlreadyVerifiedException.java
+
+    │   ├── EmailNotVerifiedException.java
+
+    │   ├── EmailSendingException.java
+
+    │   ├── InValidCredentialsException.java
+
+    │   ├── InvalidRoleException.java
+
+    │   ├── InvalidTokenException.java
+
+    │   ├── ResourceNotFoundException.java
+
+    │   ├── TokenExpiredException.java
+
     │   └── GlobalExceptionHandler.java
+
+
+
     ├── security
+
     │   ├── JwtAuthenticationFilter.java
+
     │   └── JwtUtil.java
+
+
+
     ├── service
+
     │   ├── AuthService.java
+
+    │   ├── EmailService.java
+
+    │   ├── FileUploadService.java
+
     │   ├── UserService.java
-    │   └── VideoService.java
+
+    │   ├── VideoService.java
+
+    │   └── WatchListService.java
+
+
+
+    ├── serviceImpl
+
+    │   ├── AuthServiceImpl.java
+
+    │   ├── EmailServiceImpl.java
+
+    │   ├── FileUploadServiceImpl.java
+
+    │   ├── UserServiceImpl.java
+
+    │   ├── VideoServiceImpl.java
+
+    │   └── WatchListServiceImpl.java
+
+
+
     └── util
-        └── FileHandlerUtil.java
 
-```
+        ├── FileHandlerUtil.java
 
+        ├── PaginationUtils.java
+
+        └── ServiceUtil.java
+
+````
+
+
+
+---
 ---
 
 ## ▶️ How to Run
