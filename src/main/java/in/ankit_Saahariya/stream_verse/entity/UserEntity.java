@@ -71,7 +71,7 @@ public class UserEntity {
     )
     private Set<VideoEntity> watchList = new HashSet<>();
 
-    private void addToWatchList(VideoEntity video){
+    public void addToWatchList(VideoEntity video){
         this.watchList.add(video);
     }
 

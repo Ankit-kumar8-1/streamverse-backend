@@ -1,6 +1,7 @@
 package in.ankit_Saahariya.stream_verse.dao;
 
 import in.ankit_Saahariya.stream_verse.entity.UserEntity;
+import in.ankit_Saahariya.stream_verse.entity.VideoEntity;
 import in.ankit_Saahariya.stream_verse.enums.Role;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -42,4 +43,22 @@ public interface UserRepository extends JpaRepository<UserEntity,Long> {
             @Param("email") String email,
             @Param("videoIds") List<Long> videoIds
     );
+
+    @Query(
+            "SELECT v FROM UserEntity u JOIN u.watchList v " +
+                    "WHERE u.id = :userId " +
+                    "AND v.published = true " +
+                    "AND ( " +
+                    "LOWER(v.title) LIKE LOWER(CONCAT('%', :search, '%')) OR " +
+                    "LOWER(v.description) LIKE LOWER(CONCAT('%', :search, '%')) " +
+                    ")"
+    )
+    Page<VideoEntity> searchWatchListByUserId(
+            @Param("userId") Long userId,
+            @Param("search") String search,
+            Pageable pageable
+    );
+
+    @Query("SELECT v FROM UserEntity u JOIN u.watchList v WHERE u.id = :userId AND v.published = true")
+    Page<VideoEntity> findWatchListByUserId(Long userId, Pageable pageable);
 }
