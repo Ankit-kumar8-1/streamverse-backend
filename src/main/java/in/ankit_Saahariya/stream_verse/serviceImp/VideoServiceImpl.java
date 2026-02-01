@@ -6,16 +6,19 @@ import in.ankit_Saahariya.stream_verse.dto.request.VideoRequest;
 import in.ankit_Saahariya.stream_verse.dto.response.MessageResponse;
 import in.ankit_Saahariya.stream_verse.dto.response.PageResponse;
 import in.ankit_Saahariya.stream_verse.dto.response.VideoResponse;
+import in.ankit_Saahariya.stream_verse.dto.response.VideoStatsResponse;
 import in.ankit_Saahariya.stream_verse.entity.VideoEntity;
 import in.ankit_Saahariya.stream_verse.service.VideoService;
 import in.ankit_Saahariya.stream_verse.util.PaginationUtils;
 import in.ankit_Saahariya.stream_verse.util.ServiceUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class VideoServiceImpl implements VideoService {
@@ -88,5 +91,64 @@ public class VideoServiceImpl implements VideoService {
         }
         videoRepository.deleteById(id);
         return new MessageResponse("Video deleted successfully !");
+    }
+
+    @Override
+    public MessageResponse toggleVideoPublishedStatusByAdmin(Long id, boolean status) {
+        VideoEntity video = serviceUtil.getVideoByIdOrThrow(id);
+        video.setPublished(status);
+        videoRepository.save(video);
+        return new MessageResponse("Video Published status updated successfully !");
+    }
+
+    @Override
+    public VideoStatsResponse getAdminStats() {
+        long totalVideos = videoRepository.count();
+        long publishedVideos = videoRepository.countPublishedVideo();
+        long totalDuration = videoRepository.getTotalDuration();
+
+        return new VideoStatsResponse(totalVideos,publishedVideos,totalDuration);
+    }
+
+    @Override
+    public PageResponse<VideoResponse> getPublishedVideo(int page, int size, String search, String email) {
+
+        Pageable pageable = PaginationUtils.createPageRequest(page, size, "createdAt");
+
+        Page<VideoEntity> videoPage;
+
+        if (search != null && !search.trim().isEmpty()) {
+            videoPage = videoRepository.searchPublishedVideos(search.trim(), pageable);
+        } else {
+            videoPage = videoRepository.findByPublishedTrueOrderByCreatedAtDesc(pageable);
+        }
+
+        List<VideoEntity> videos = videoPage.getContent();
+
+        Set<Long> watchListIds = Set.of();
+        if (!videos.isEmpty()) {
+            List<Long> videoIds = videos.stream()
+                    .map(VideoEntity::getId)
+                    .toList();
+            watchListIds = userRepository.findWatchListVideoIds(email, videoIds);
+        }
+
+        Set<Long> finalWatchListIds = watchListIds;
+        videos.forEach(video ->
+                video.setIsInWatchList(finalWatchListIds.contains(video.getId()))
+        );
+
+        List<VideoResponse> videoResponses =
+                videos.stream().map(VideoResponse::fromEntity).toList();
+
+        return PaginationUtils.toPageResponse(videoPage, videoResponses);
+    }
+
+    @Override
+    public List<VideoResponse> getFeaturedResponse() {
+        Pageable pageable = PageRequest.of(0,5);
+        List<VideoEntity> videos = videoRepository.findRandomPublishedVideos(pageable);
+
+        return videos.stream().map(VideoResponse::fromEntity).toList();
     }
 }

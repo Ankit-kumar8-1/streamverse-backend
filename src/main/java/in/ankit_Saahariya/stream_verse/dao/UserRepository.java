@@ -8,7 +8,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 public interface UserRepository extends JpaRepository<UserEntity,Long> {
 
@@ -29,4 +31,15 @@ public interface UserRepository extends JpaRepository<UserEntity,Long> {
     Page<UserEntity> searchUsers(@Param("search") String search, Pageable pageable);
 
     long countByRole(Role role);
+
+    @Query(
+            "SELECT v.id FROM UserEntity u " +
+                    "JOIN u.watchList v " +
+                    "WHERE u.email = :email " +
+                    "AND v.id IN :videoIds"
+    )
+    Set<Long> findWatchListVideoIds(
+            @Param("email") String email,
+            @Param("videoIds") List<Long> videoIds
+    );
 }

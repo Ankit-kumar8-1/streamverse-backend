@@ -6,14 +6,18 @@ import in.ankit_Saahariya.stream_verse.dto.request.VideoRequest;
 import in.ankit_Saahariya.stream_verse.dto.response.MessageResponse;
 import in.ankit_Saahariya.stream_verse.dto.response.PageResponse;
 import in.ankit_Saahariya.stream_verse.dto.response.VideoResponse;
+import in.ankit_Saahariya.stream_verse.dto.response.VideoStatsResponse;
 import in.ankit_Saahariya.stream_verse.service.VideoService;
 import jakarta.validation.Valid;
 import jakarta.websocket.server.PathParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityReturnValueHandler;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/videos")
@@ -53,4 +57,37 @@ public class VideoController {
     public ResponseEntity<MessageResponse> deleteVideoByAdmin(@PathVariable Long id){
         return ResponseEntity.ok(videoService.deleteVideo(id));
     }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @PatchMapping("/admin/{id}/publish")
+    public ResponseEntity<MessageResponse> toggleVideoPublishedStatusByAdmin(
+            @PathVariable Long id,@RequestParam boolean value
+    ){
+        return ResponseEntity.ok(videoService.toggleVideoPublishedStatusByAdmin(id,value));
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/admin/stats")
+    public ResponseEntity<VideoStatsResponse> getAdminStats(){
+        return ResponseEntity.ok(videoService.getAdminStats());
+    }
+
+    @GetMapping("/published")
+    public ResponseEntity<PageResponse<VideoResponse>>  getPublishedVideos(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(required = false) String search,
+            Authentication authentication
+    ){
+        String email = authentication.getName();
+        PageResponse<VideoResponse> response = videoService.getPublishedVideo(page,size,search,email);
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/featured")
+    public ResponseEntity<List<VideoResponse>> getFeaturedVideos(){
+        List<VideoResponse> responses =  videoService.getFeaturedResponse();
+        return ResponseEntity.ok(responses);
+    }
 }
+
