@@ -1,31 +1,33 @@
 
-````md
+
+
+
 # Stream Verse - Backend
 
-Stream Verse is a Spring Boot backend application for a video streaming platform.  
-It provides secure authentication, video and image handling, admin management, and user watchlist features.
+**Stream Verse** is a Spring Boot backend application for a video streaming platform.  
+It provides secure authentication, video & image handling, admin management, and user watchlist features.
 
 ---
 
-## Tech Stack
+## 🚀 Tech Stack
 
-- Java
-- Spring Boot
-- Spring Security (JWT)
-- Spring Data JPA
-- Hibernate
-- MySQL
-- Maven
+- **Java**
+- **Spring Boot**
+- **Spring Security (JWT)**
+- **Spring Data JPA**
+- **Hibernate**
+- **MySQL**
+- **Maven**
 
 ---
 
-## Features
+## ✨ Features
 
 ### Authentication & Security
 - User signup with email verification
 - JWT-based login
 - Resend email verification
-- Forgot password and reset password using secure tokens
+- Forgot password & reset password using secure tokens
 - Change password for authenticated users
 - Role-based authorization (ADMIN / USER)
 
@@ -41,11 +43,11 @@ It provides secure authentication, video and image handling, admin management, a
 - HTTP Range-based video streaming
 - Admin video create, update, delete
 - Publish / unpublish videos
-- Featured videos and video statistics
-- Paginated and searchable video listing
+- Featured videos & video statistics
+- Paginated & searchable video listing
 
 ### Watchlist
-- Add and remove videos from watchlist
+- Add/remove videos from watchlist
 - Paginated watchlist with search support
 - Watchlist status included in video responses
 
@@ -55,7 +57,7 @@ It provides secure authentication, video and image handling, admin management, a
 
 ---
 
-## Project Structure
+## 📂 Project Structure
 
 ```text
 src/main/java
@@ -144,7 +146,7 @@ src/main/java
 
 ---
 
-## Configuration (`application.properties`)
+## ⚙️ Configuration (`application.properties`)
 
 ```properties
 # Application
@@ -191,7 +193,7 @@ app.backend.url=your_backend_url
 jwt.secret=your_jwt_secret
 ```
 
-> Notes:
+> **Notes**
 >
 > * Upload directories are automatically created on startup.
 > * Video streaming supports HTTP Range requests for playback.
@@ -199,7 +201,7 @@ jwt.secret=your_jwt_secret
 
 ---
 
-## How to Run
+## ▶️ How to Run
 
 1. Clone the repository
 
@@ -224,16 +226,19 @@ http://localhost:8080/api/v1.1
 
 ---
 
-## API Testing
+## 🧪 API Testing
 
-* Use Postman for testing authentication, file uploads, streaming, and email flows.
-* Recommended: capture at least one screenshot for signup/email verification and video streaming.
+* Use **Postman** for testing authentication, file uploads, streaming, and email flows.
+* Recommended: capture **at least one screenshot** for signup/email verification and video streaming.
+* Optional: export Postman collection and save in `docs/` folder for collaborators.
 
 ---
 
-## Author
+## 👤 Author
 
-Ankit Saahariya
+**Ankit Saahariya**
 Java Backend Developer (Spring Boot)
 
 ---
+
+
